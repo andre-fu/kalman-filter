@@ -1,5 +1,5 @@
 #include <eigen3/Eigen/Dense>
-
+#pragma once
 // X = ( x y x' y' x'' y'')^T
 
 // PREDICT:
@@ -34,8 +34,8 @@ class KalmanFilter {
         Eigen::VectorXf z;
 
         
-        long t = 0;     // seconds
-        long dt  = 0.1; // seconds
+        long t;     // seconds
+        long dt; // seconds
         Eigen::MatrixXf I; //Id 
 
 
@@ -45,15 +45,17 @@ class KalmanFilter {
             const Eigen::MatrixXf Q,
             const Eigen::MatrixXf P
         );
+        
         ~KalmanFilter();
 
         // intial t0 & intial state matrix
-        void init(long t0, long dt, const Eigen::VectorXf & X0);
+        void init(long t0, long dt, const Eigen::VectorXf X0);
         void predict();
-        void update(const Eigen::VectorXf & z);  
-        Eigen::VectorXd state();
+        void update(const Eigen::VectorXf z);  
+        Eigen::VectorXf state();
 
 
 
 
 };
+
