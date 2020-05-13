@@ -5,9 +5,9 @@
 
 
 KalmanFilter::KalmanFilter(
-    const Eigen::MatrixXd & R,
-    const Eigen::MatrixXd & Q,
-    const Eigen::MatrixXd & P
+    const Eigen::MatrixXd R,
+    const Eigen::MatrixXd Q,
+    const Eigen::MatrixXd P
 ): R(R), Q(Q), P(P) {
     F(6,6); P(6,6); Q(6,6); H(6,6); R(4,4); z(4,1); 
     I = Eigen::MatrixXd::Identity(6, 6);
@@ -32,8 +32,8 @@ KalmanFilter::KalmanFilter(
 
 }
 
-void KalmanFilter::init(long t0, long dt, const Eigen::MatrixXd & X0) {
-    X_prev = X0;
+void KalmanFilter::init(long t0, long dt, const Eigen::VectorXf & X0) {
+    X_prev = (Eigen::VectorXf)X0;
     t = t0;
     dt = dt;
 }
@@ -43,7 +43,7 @@ void KalmanFilter::predict() {
     P = F*P*F.transpose() + Q;
 }
 
-void KalmanFilter::update(const Eigen::VectorXd & z) {
+void KalmanFilter::update(const Eigen::VectorXf & z) {
     K = P*H.transpose() * (H*P*H.transpose() + R).inverse();
     X_new = X_new + K*(z - H*X_new);
     P = (I - K*H)*P;

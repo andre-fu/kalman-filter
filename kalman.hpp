@@ -31,26 +31,26 @@ class KalmanFilter {
         Eigen::MatrixXf H;
         Eigen::MatrixXf K;
         Eigen::MatrixXf R; 
-        Eigen::MatrixXf z;
+        Eigen::VectorXf z;
 
         
         long t = 0;     // seconds
         long dt  = 0.1; // seconds
-        Eigen::MatrixXd I; //Id 
+        Eigen::MatrixXf I; //Id 
 
 
     public:
         KalmanFilter(
-            const Eigen::MatrixXd & R,
-            const Eigen::MatrixXd & Q,
-            const Eigen::MatrixXd & P
+            const Eigen::MatrixXf R,
+            const Eigen::MatrixXf Q,
+            const Eigen::MatrixXf P
         );
         ~KalmanFilter();
 
         // intial t0 & intial state matrix
-        void init(long t0, long dt, const Eigen::MatrixXd & X0);
+        void init(long t0, long dt, const Eigen::VectorXf & X0);
         void predict();
-        void update(const Eigen::VectorXd & z);  
+        void update(const Eigen::VectorXf & z);  
         Eigen::VectorXd state();
 
 
