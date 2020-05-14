@@ -1,6 +1,6 @@
 #include <eigen3/Eigen/Dense>
 #pragma once
-// X = ( x y x' y' x'' y'')^T
+// X = ( x y x' y')^T
 
 // PREDICT:
 //     X_k+1 = F*Xk + B*u
@@ -16,27 +16,27 @@
 class KalmanFilter {
     private:
         //predict
-        Eigen::MatrixXf F; //aliased to A in other texts 
+        Eigen::Matrix<long double, 4, 4> F; //aliased to A in other texts 
         // Eigen::MatrixXd & B; // assume no control
-        Eigen::Matrix<long double, 6, 6> P;
-        Eigen::Matrix<long double, 6, 6> Q;
+        Eigen::Matrix<long double, 4, 4> P;
+        Eigen::Matrix<long double, 4, 4> Q;
 
         // Eigen::VectorXd & u; // assume no control input 
 
-        Eigen::VectorXf X_new;
-        Eigen::VectorXf X_prev;
+        Eigen::Matrix<long double, 4, 1> X_new;
+        Eigen::Matrix<long double, 4, 1> X_prev;
 
 
         //update
-        Eigen::MatrixXf H;
-        Eigen::MatrixXf K;
-        Eigen::Matrix<long double, 4, 4> R; 
-        Eigen::VectorXf z;
+        Eigen::Matrix<long double, 2, 4> H;
+        Eigen::Matrix<long double, 4, 2> K;
+        Eigen::Matrix<long double, 2, 2> R; 
+        Eigen::Matrix<long double, 2, 1> z;
 
         
-        long t;     // seconds
-        long dt; // seconds
-        Eigen::MatrixXf I; //Id 
+        long double t;     // seconds
+        long double dt; // seconds
+        Eigen::Matrix<long double, 4, 4> I; //Id 
 
 
     public:
@@ -44,18 +44,18 @@ class KalmanFilter {
             // const Eigen::Matrix<long double, 6, 6> R,
             // const Eigen::Matrix<long double, 6, 6> Q,
             // const Eigen::Matrix<long double, 6, 6> P
-            const Eigen::Matrix<long double, 4, 4> R,
-            const Eigen::Matrix<long double, 6, 6> Q,
-            const Eigen::Matrix<long double, 6, 6> P
+            const Eigen::Matrix<long double, 2, 2> R,
+            const Eigen::Matrix<long double, 4, 4> Q,
+            const Eigen::Matrix<long double, 4, 4> P
         );
         
         ~KalmanFilter();
 
         // intial t0 & intial state matrix
-        void init(long t0, long dt, const Eigen::VectorXf X0);
+        void init(long double t0, long double dt, const Eigen::Matrix<long double, 4, 1> X0);
         void predict();
-        void update(const Eigen::VectorXf z);  
-        Eigen::VectorXf state();
+        void update(const Eigen::Matrix<long double, 2, 1> z);  
+        Eigen::Matrix<long double, 4, 1> state();
 
 
 
