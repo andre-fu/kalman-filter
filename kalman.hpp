@@ -18,8 +18,8 @@ class KalmanFilter {
         //predict
         Eigen::MatrixXf F; //aliased to A in other texts 
         // Eigen::MatrixXd & B; // assume no control
-        Eigen::MatrixXf P;
-        Eigen::MatrixXf Q;
+        Eigen::Matrix<long double, 6, 6> P;
+        Eigen::Matrix<long double, 6, 6> Q;
 
         // Eigen::VectorXd & u; // assume no control input 
 
@@ -30,7 +30,7 @@ class KalmanFilter {
         //update
         Eigen::MatrixXf H;
         Eigen::MatrixXf K;
-        Eigen::MatrixXf R; 
+        Eigen::Matrix<long double, 4, 4> R; 
         Eigen::VectorXf z;
 
         
@@ -41,9 +41,12 @@ class KalmanFilter {
 
     public:
         KalmanFilter(
-            const Eigen::MatrixXf R,
-            const Eigen::MatrixXf Q,
-            const Eigen::MatrixXf P
+            // const Eigen::Matrix<long double, 6, 6> R,
+            // const Eigen::Matrix<long double, 6, 6> Q,
+            // const Eigen::Matrix<long double, 6, 6> P
+            const Eigen::Matrix<long double, 4, 4> R,
+            const Eigen::Matrix<long double, 6, 6> Q,
+            const Eigen::Matrix<long double, 6, 6> P
         );
         
         ~KalmanFilter();
