@@ -41,6 +41,7 @@ int main() {
     // cout << typeid(Q).name() << endl;
     // cout << typeid(R).name() << endl;
     Eigen::Matrix<long double, 2, 1> z_measure;
+    // Z = (x y )^T
     vector<double> measurements = {
       1.04202710058, 1.10726790452, 1.2913511148, 1.48485250951, 1.72825901034,
       1.74216489744, 2.11672039768, 2.14529225112, 2.16029641405, 2.21269371128,
@@ -52,20 +53,22 @@ int main() {
       1.86967808173, 1.18073207847, 1.10729605087, 0.916168349913, 0.678547664519,
       0.562381751596, 0.355468474885, -0.155607486619, -0.287198661013, -0.602973173813
     };
-    KalmanFilter kf(R, Q, P);
+    KalmanFilter kf(R, Q, P, dt);
     Eigen::Matrix<long double, 4, 1> X0;
     X0.setZero();
+    //cout<<X0<<endl;
 
     kf.init(t, dt, X0);
     bool stop = false;
+    int i = 0;
     while(stop == false){
         t += dt;
-        int i = 0;
         kf.predict();
-        z_measure << measurements[i], measurements[i+1];
+        z_measure << measurements[i], measurements[i];
         kf.update(z_measure);
         cout << "at t: " << t << " State, X: \n" << kf.state().transpose() << endl;
         i++;
+        //cout << measurements.size()<< endl;
         if (i == measurements.size() -1){
             stop = true;
         }

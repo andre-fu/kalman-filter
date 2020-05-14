@@ -8,10 +8,10 @@ using namespace std;
 KalmanFilter::KalmanFilter(
     const Eigen::Matrix<long double, 2, 2> R,
     const Eigen::Matrix<long double, 4, 4> Q,
-    const Eigen::Matrix<long double, 4, 4> P
-): R(R), Q(Q), P(P) {
+    const Eigen::Matrix<long double, 4, 4> P,
+    long double dt
+): R(R), Q(Q), P(P), dt(dt) {
     // cout << "from class init" << endl;
-    //dt = 0.1;
     // //F(6,6); P(6,6); Q(6,6); H(6,6); R(4,4); z(4,1); 
     I = Eigen::Matrix<long double, 4, 4>::Identity(4, 4);
     // cout << "I: \n" << I << endl;
@@ -52,6 +52,7 @@ void KalmanFilter::init(long double t0, long double dt, const Eigen::Matrix<long
 void KalmanFilter::predict() {
     X_new = F*X_prev;
     P = F*P*F.transpose() + Q;
+    //cout << X_new << endl;
 }
 
 void KalmanFilter::update(const Eigen::Matrix<long double, 2, 1> z) {

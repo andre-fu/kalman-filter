@@ -46,7 +46,8 @@ class KalmanFilter {
             // const Eigen::Matrix<long double, 6, 6> P
             const Eigen::Matrix<long double, 2, 2> R,
             const Eigen::Matrix<long double, 4, 4> Q,
-            const Eigen::Matrix<long double, 4, 4> P
+            const Eigen::Matrix<long double, 4, 4> P,
+            long double dt
         );
         
         ~KalmanFilter();
