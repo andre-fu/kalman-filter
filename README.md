@@ -12,6 +12,7 @@ make
 ./kalman-filter
 ```
 For Future Engineering Science Students: 
+
 1. Record the circumference of your wheel
 2. Calculate how fast you plan on setting the motor to go 
 3. Calculate the expected position of your robot according to those parameters
@@ -20,18 +21,26 @@ For Future Engineering Science Students:
 6. Alter the Noise parameters according to your error bars on the motor (R matrix) 
 7. Profit! 
 
+
 <img src="https://render.githubusercontent.com/render/math?math=X = (x y \dot x \dot y )^T">
 
+
 **Prediction Step**
-<img src="https://render.githubusercontent.com/render/math?math=X_{k+1}' = F \cdot X_k + B*u">
-<img src="https://render.githubusercontent.com/render/math?math=P_{k+1}' = F \cdot P_{k} \cdot F^T + Q">
+
+<img src="https://render.githubusercontent.com/render/math?math=X_{k %2B 1}' = F \cdot X_k %2B B*u">
+
+<img src="https://render.githubusercontent.com/render/math?math=P_{k %2B 1}' = F \cdot P_{k} \cdot F^T %2B Q">
 
 **Update Step**
-<img src="https://render.githubusercontent.com/render/math?math=K_k = P_k \cdot H^T (H \cdot P_k \cdot H^T + R )^{-1}">
-<img src="https://render.githubusercontent.com/render/math?math=X_{k+1} = X_{k+1}' + K_k \cdot (z_k - H \cdot X_{k+1}')">
-<img src="https://render.githubusercontent.com/render/math?math=P_k = (Id - K_k *H) * P_{k}'">
+
+<img src="https://render.githubusercontent.com/render/math?math=K_k = P_k \cdot H^T (H \cdot P_k \cdot H^T %2B R )^{-1}"> 
+
+<img src="https://render.githubusercontent.com/render/math?math=X_{k %2B 1} = X_{k %2B 1}' + K_k \cdot (z_k - H \cdot X_{k%2B1}')">
+
+<img src="https://render.githubusercontent.com/render/math?math=P_{k %2B 1} = (Id - K_k *H) * P_{k %2B 1}'">
 
 
 
 TODO:
+
 Implement a way of getting the z, input measurements via stream
